@@ -1,0 +1,24 @@
+
+{
+  "hero": {
+    "url": "https://picsum.photos/seed/baalvion-hero/1200/800",
+    "width": 1200,
+    "height": 800,
+    "alt": "Global trade network visualization",
+    "hint": "global trade"
+  },
+  "dashboard": {
+    "url": "https://picsum.photos/seed/dashboard/1000/600",
+    "width": 1000,
+    "height": 600,
+    "alt": "Enterprise Dashboard",
+    "hint": "enterprise dashboard"
+  },
+  "scalability": {
+    "url": "https://picsum.photos/seed/scalability/1200/600",
+    "width": 1200,
+    "height": 600,
+    "alt": "High Performance Computing Nodes",
+    "hint": "server farm"
+  }
+}
