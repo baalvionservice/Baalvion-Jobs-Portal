@@ -54,8 +54,9 @@ export interface AnalyticsData {
 
   departmentHiring: DepartmentHiringItem[];
 
-  /* Campus analytics */
   placementSuccessRate?: number;
+
   collegeWiseStats?: CollegeStatsItem[];
+
   jobDistribution?: JobDistributionItem[];
 }
