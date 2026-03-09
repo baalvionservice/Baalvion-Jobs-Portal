@@ -31,10 +31,28 @@ export default function CampusReportsPage() {
 
   const { data, isLoading } = useAnalytics(filters);
 
+  /* ---------------- SAFE FALLBACK VALUES ---------------- */
+
   const placementRate = Number(data?.placementSuccessRate ?? 0);
+
+  const collegeStats =
+    (data?.collegeWiseStats ?? []).map((item: any) => ({
+      college: item?.college ?? item?.collegeName ?? 'Unknown',
+      applications: Number(item?.applications ?? item?.totalApplications ?? 0),
+      placed: Number(item?.placed ?? item?.totalPlaced ?? 0),
+    })) || [];
+
+  const jobDistribution =
+    (data?.jobDistribution ?? []).map((item: any) => ({
+      job: item?.job ?? item?.title ?? item?.role ?? 'Unknown',
+      count: Number(item?.count ?? item?.applications ?? 0),
+    })) || [];
+
+  /* ---------------- UI ---------------- */
 
   return (
     <div className="flex flex-col gap-8">
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight">
           Campus Placement Analytics
@@ -46,19 +64,21 @@ export default function CampusReportsPage() {
 
       <AnalyticsFilters filters={filters} setFilters={setFilters} />
 
-      {isLoading || !data ? (
+      {isLoading ? (
         <ReportsSkeleton />
       ) : (
         <div className="space-y-8">
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <PlacementSuccessPie rate={placementRate} />
 
             <div className="lg:col-span-2">
-              <CollegeStatsBarChart data={data?.collegeWiseStats ?? []} />
+              <CollegeStatsBarChart data={collegeStats} />
             </div>
           </div>
 
-          <JobDistributionBarChart data={data?.jobDistribution ?? []} />
+          <JobDistributionBarChart data={jobDistribution} />
+
         </div>
       )}
     </div>
