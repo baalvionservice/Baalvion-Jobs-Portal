@@ -1,7 +1,10 @@
 import { JobStatus } from "@/lib/talent-acquisition";
 
 export interface AnalyticsFilters {
-  dateRange?: { from?: Date; to?: Date };
+  dateRange?: {
+    from?: Date;
+    to?: Date;
+  };
   countries?: string[];
   departmentIds?: string[];
 }
@@ -46,13 +49,13 @@ export interface JobDistributionItem {
 }
 
 export interface AnalyticsData {
-  kpis: KpiData;
+  kpis?: KpiData;
 
-  applicationsTrend: ApplicationsTrendItem[];
+  applicationsTrend?: ApplicationsTrendItem[];
 
-  statusDistribution: StatusDistributionItem[];
+  statusDistribution?: StatusDistributionItem[];
 
-  departmentHiring: DepartmentHiringItem[];
+  departmentHiring?: DepartmentHiringItem[];
 
   placementSuccessRate?: number;
 
