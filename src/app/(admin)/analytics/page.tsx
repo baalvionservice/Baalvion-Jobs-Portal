@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -14,25 +13,27 @@ import { StatusDistributionChart } from '@/modules/analytics/components/StatusDi
 import { DepartmentHiringChart } from '@/modules/analytics/components/DepartmentHiringChart';
 
 function DashboardSkeleton() {
-    return (
-        <div className="space-y-8">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Skeleton className="h-28 w-full" />
-                <Skeleton className="h-28 w-full" />
-                <Skeleton className="h-28 w-full" />
-                <Skeleton className="h-28 w-full" />
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <div className="lg:col-span-3">
-                    <Skeleton className="h-80 w-full" />
-                </div>
-                <div className="lg:col-span-2">
-                     <Skeleton className="h-80 w-full" />
-                </div>
-            </div>
-            <Skeleton className="h-96 w-full" />
+  return (
+    <div className="space-y-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Skeleton className="h-28 w-full" />
+        <Skeleton className="h-28 w-full" />
+        <Skeleton className="h-28 w-full" />
+        <Skeleton className="h-28 w-full" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div className="lg:col-span-3">
+          <Skeleton className="h-80 w-full" />
         </div>
-    )
+        <div className="lg:col-span-2">
+          <Skeleton className="h-80 w-full" />
+        </div>
+      </div>
+
+      <Skeleton className="h-96 w-full" />
+    </div>
+  );
 }
 
 export default function AnalyticsPage() {
@@ -44,32 +45,52 @@ export default function AnalyticsPage() {
 
   const { data, isLoading } = useAnalytics(filters);
 
+  const safeKpis = data?.kpis ?? {
+    totalActiveJobs: { value: 0, change: 0 },
+    totalApplications: { value: 0, change: 0 },
+    avgTimeToFill: { value: 0, change: 0 },
+    overallConversionRate: { value: 0, change: 0 },
+  };
+
+  const applicationsTrend = data?.applicationsTrend ?? [];
+  const statusDistribution = data?.statusDistribution ?? [];
+  const departmentHiring = data?.departmentHiring ?? [];
+
   return (
-    <RouteGuard permission='analytics.view'>
+    <RouteGuard permission="analytics.view">
       <div className="flex flex-col gap-8">
+
         <div>
-            <h1 className="text-3xl font-bold tracking-tight">Recruitment Analytics</h1>
-            <p className="text-muted-foreground">Monitor key hiring metrics and pipeline health.</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Recruitment Analytics
+          </h1>
+          <p className="text-muted-foreground">
+            Monitor key hiring metrics and pipeline health.
+          </p>
         </div>
 
         <AnalyticsFilters filters={filters} setFilters={setFilters} />
 
         {isLoading || !data ? (
-            <DashboardSkeleton />
+          <DashboardSkeleton />
         ) : (
-            <>
-                <KPIGrid kpis={data.kpis} />
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                    <div className="lg:col-span-3">
-                        <ApplicationsTrendChart data={data.applicationsTrend} />
-                    </div>
-                     <div className="lg:col-span-2">
-                        <StatusDistributionChart data={data.statusDistribution} />
-                    </div>
-                </div>
-                 <DepartmentHiringChart data={data.departmentHiring} />
-            </>
+          <>
+            <KPIGrid kpis={safeKpis} />
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+              <div className="lg:col-span-3">
+                <ApplicationsTrendChart data={applicationsTrend} />
+              </div>
+
+              <div className="lg:col-span-2">
+                <StatusDistributionChart data={statusDistribution} />
+              </div>
+            </div>
+
+            <DepartmentHiringChart data={departmentHiring} />
+          </>
         )}
+
       </div>
     </RouteGuard>
   );
