@@ -45,16 +45,25 @@ export default function AnalyticsPage() {
 
   const { data, isLoading } = useAnalytics(filters);
 
-  const safeKpis = data?.kpis ?? {
-    totalActiveJobs: { value: 0, change: 0 },
-    totalApplications: { value: 0, change: 0 },
-    avgTimeToFill: { value: 0, change: 0 },
-    overallConversionRate: { value: 0, change: 0 },
-  };
+  if (isLoading || !data) {
+    return (
+      <RouteGuard permission="analytics.view">
+        <div className="flex flex-col gap-8">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Recruitment Analytics
+            </h1>
+            <p className="text-muted-foreground">
+              Monitor key hiring metrics and pipeline health.
+            </p>
+          </div>
 
-  const applicationsTrend = data?.applicationsTrend ?? [];
-  const statusDistribution = data?.statusDistribution ?? [];
-  const departmentHiring = data?.departmentHiring ?? [];
+          <AnalyticsFilters filters={filters} setFilters={setFilters} />
+          <DashboardSkeleton />
+        </div>
+      </RouteGuard>
+    );
+  }
 
   return (
     <RouteGuard permission="analytics.view">
@@ -71,25 +80,19 @@ export default function AnalyticsPage() {
 
         <AnalyticsFilters filters={filters} setFilters={setFilters} />
 
-        {isLoading || !data ? (
-          <DashboardSkeleton />
-        ) : (
-          <>
-            <KPIGrid kpis={safeKpis} />
+        <KPIGrid kpis={data.kpis} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-              <div className="lg:col-span-3">
-                <ApplicationsTrendChart data={applicationsTrend} />
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          <div className="lg:col-span-3">
+            <ApplicationsTrendChart data={data.applicationsTrend || []} />
+          </div>
 
-              <div className="lg:col-span-2">
-                <StatusDistributionChart data={statusDistribution} />
-              </div>
-            </div>
+          <div className="lg:col-span-2">
+            <StatusDistributionChart data={data.statusDistribution || []} />
+          </div>
+        </div>
 
-            <DepartmentHiringChart data={departmentHiring} />
-          </>
-        )}
+        <DepartmentHiringChart data={data.departmentHiring || []} />
 
       </div>
     </RouteGuard>
