@@ -80,7 +80,7 @@ export default function AnalyticsPage() {
 
         <AnalyticsFilters filters={filters} setFilters={setFilters} />
 
-        <KPIGrid kpis={data.kpis} />
+        <KPIGrid kpis={data.kpis!} />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3">
