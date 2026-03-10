@@ -35,10 +35,10 @@ export default function ClientProjectDetailPage() {
             </div>
         );
     }
-    
+
     if (!project) return <p>Project not found.</p>;
-    
-    const canReview = project.status === 'Closed' && project.assignedContractorId;
+
+    const canReview = project.status === 'COMPLETED' && project.assignedContractorId;
 
     return (
         <div className="space-y-8">
@@ -51,7 +51,7 @@ export default function ClientProjectDetailPage() {
                     <Button onClick={() => setIsReviewOpen(true)}>Leave a Review</Button>
                 )}
             </div>
-            
+
             <Tabs defaultValue="milestones">
                 <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -65,16 +65,21 @@ export default function ClientProjectDetailPage() {
                             <CardDescription>Fund, review, and approve project milestones.</CardDescription>
                         </CardHeader>
                         <CardContent>
-                             <MilestoneList 
-                                milestones={milestones} 
+                            <div className="flex gap-4 mb-8">
+                                {project.status !== 'COMPLETED' && (
+                                    <Button>Complete Project</Button>
+                                )}
+                            </div>
+                            <MilestoneList
+                                milestones={milestones}
                                 role="CLIENT"
                                 onUpdate={refreshMilestones}
                             />
                         </CardContent>
                     </Card>
                 </TabsContent>
-                 <TabsContent value="applications" className="mt-4">
-                     <Card>
+                <TabsContent value="applications" className="mt-4">
+                    <Card>
                         <CardHeader>
                             <CardTitle>Project Applicants</CardTitle>
                             <CardDescription>Review, rank, and select the best contractor for your project.</CardDescription>
@@ -82,11 +87,11 @@ export default function ClientProjectDetailPage() {
                         <CardContent>
                             <RankedApplicationList applications={applications} />
                         </CardContent>
-                     </Card>
-                 </TabsContent>
+                    </Card>
+                </TabsContent>
             </Tabs>
             {isReviewOpen && canReview && (
-                 <SubmitReviewDialog
+                <SubmitReviewDialog
                     isOpen={isReviewOpen}
                     onClose={() => setIsReviewOpen(false)}
                     onSuccess={() => {

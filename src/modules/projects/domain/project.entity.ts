@@ -9,17 +9,4 @@ export interface ProjectRole {
     slots: number;
 }
 
-export interface Project {
-    id: string;
-    title: string;
-    category: string;
-    description: string;
-    budget: number;
-    currency: string;
-    status: ProjectStatus;
-    requiredSkills: string[];
-    owner: string;
-    createdAt: string;
-    updatedAt: string;
-    roles: ProjectRole[];
-}
+export type { Project } from '@/types/contracts';

@@ -1,7 +1,8 @@
 // This is a mock email service for demonstration purposes.
 // In a real application, this would integrate with a transactional email provider like SendGrid, Postmark, or AWS SES.
 
-import { Job, Candidate, User, Interview } from "../types";
+import { Job, Candidate, User } from "@/types";
+import { Interview } from "@/modules/interviews/domain/interview.entity";
 
 export async function sendApplicationConfirmation(candidate: Candidate, job: Job) {
   console.log("=====================================");
@@ -62,11 +63,11 @@ export async function sendOfferEmail(candidate: Candidate, job: Job) {
 }
 
 export async function sendInterviewScheduledEmail(candidate: Candidate, interview: Interview) {
-    console.log("=====================================");
-    console.log(`📧 MOCK EMAIL: Sending interview confirmation to candidate...`);
-    console.log(`   To: ${candidate.email}`);
-    console.log(`   Subject: Interview Scheduled for ${interview.jobTitle}`);
-    console.log(`
+  console.log("=====================================");
+  console.log(`📧 MOCK EMAIL: Sending interview confirmation to candidate...`);
+  console.log(`   To: ${candidate.email}`);
+  console.log(`   Subject: Interview Scheduled for ${interview.jobTitle}`);
+  console.log(`
       Hi ${candidate.name},
   
       Your ${interview.stage.replace('_', ' ')} for the ${interview.jobTitle} position has been scheduled.
@@ -76,15 +77,15 @@ export async function sendInterviewScheduledEmail(candidate: Candidate, intervie
       Best,
       The Baalvion Talent Team
     `);
-    console.log("=====================================");
+  console.log("=====================================");
 }
 
 export async function sendInterviewerNotification(interviewer: User, interview: Interview) {
-    console.log("=====================================");
-    console.log(`📧 MOCK EMAIL: Sending interview notification to interviewer...`);
-    console.log(`   To: ${interviewer.email}`);
-    console.log(`   Subject: You have been scheduled for an interview`);
-    console.log(`
+  console.log("=====================================");
+  console.log(`📧 MOCK EMAIL: Sending interview notification to interviewer...`);
+  console.log(`   To: ${interviewer.email}`);
+  console.log(`   Subject: You have been scheduled for an interview`);
+  console.log(`
       Hi ${interviewer.name},
   
       You have been scheduled for a ${interview.stage.replace('_', ' ')} for candidate ID ${interview.candidateId}.
@@ -96,5 +97,5 @@ export async function sendInterviewerNotification(interviewer: User, interview: 
       Thanks,
       Baalvion TalentOS
     `);
-    console.log("=====================================");
+  console.log("=====================================");
 }

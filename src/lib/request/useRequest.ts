@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { RequestState, RequestStatus } from './request.types';
 import { AppError } from '@/lib/errors/error.types';
 import { normalizeError } from '@/lib/errors/error.normalizer';
@@ -18,7 +18,8 @@ interface UseRequestReturn<T> {
 }
 
 export function useRequest<T>(
-  asyncFn: (...args: any[]) => Promise<T>
+  asyncFn: (...args: any[]) => Promise<T>,
+  autoExecuteDeps?: any[]
 ): UseRequestReturn<T> {
   const [state, setState] = useState<RequestState<T>>({ status: 'idle' });
   const { incrementRequestCount, decrementRequestCount } = useGlobalRequest();
@@ -42,6 +43,14 @@ export function useRequest<T>(
   const reset = useCallback(() => {
     setState({ status: 'idle' });
   }, []);
+
+  // Use stringified deps or a boolean flag inside useEffect to conditionally fire on mount/deps change
+  useEffect(() => {
+    if (autoExecuteDeps) {
+      execute();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, autoExecuteDeps ? autoExecuteDeps : []);
 
   return {
     execute,

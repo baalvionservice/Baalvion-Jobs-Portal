@@ -14,11 +14,12 @@ import { Command as CommandPrimitive } from "cmdk";
 type Option = Record<"value" | "label", string>;
 
 type MultiSelectProps = {
-    options: Option[];
-    selected: string[];
-    onChange: (value: string[]) => void;
-    placeholder?: string;
-    maxSelected?: number;
+  options: Option[];
+  selected: string[];
+  onChange: (value: string[]) => void;
+  placeholder?: string;
+  maxSelected?: number;
+  disabled?: boolean;
 }
 
 export function MultiSelect({ options, selected, onChange, placeholder, maxSelected }: MultiSelectProps) {
@@ -48,7 +49,7 @@ export function MultiSelect({ options, selected, onChange, placeholder, maxSelec
 
   const selectables = options.filter(option => !selected.includes(option.value));
 
-  const isMaxedOut = maxSelected && selected.length >= maxSelected;
+  const isMaxedOut = !!(maxSelected && selected.length >= maxSelected);
 
   return (
     <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent">
@@ -94,7 +95,7 @@ export function MultiSelect({ options, selected, onChange, placeholder, maxSelec
         </div>
       </div>
       <div className="relative mt-2">
-        {open && selectables.length > 0 && !isMaxedOut ? 
+        {open && selectables.length > 0 && !isMaxedOut ?
           <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
             <CommandGroup className="h-full overflow-auto">
               {selectables.map((option) => {

@@ -9,17 +9,17 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import { SystemUser } from '../domain/user.entity';
-import { ALL_ADMIN_ROLES } from "@/lib/access/access.types";
+import { ALL_ADMIN_ROLES, UserRole, userRoles } from "@/lib/access/access.types";
 import { userService } from "@/services/user.service";
 import { useAsyncAction } from "@/hooks/useAsyncAction";
 import { useFieldPermission } from '@/hooks/usePermission';
 
 const userFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Invalid email address."),
-  role: z.enum(ALL_ADMIN_ROLES, {
-    required_error: "You need to select a user role.",
-  }),
+    name: z.string().min(2, "Name must be at least 2 characters."),
+    email: z.string().email("Invalid email address."),
+    role: z.enum(userRoles, {
+        required_error: "You need to select a user role.",
+    }),
 });
 
 type UserFormData = z.infer<typeof userFormSchema>;
@@ -47,18 +47,18 @@ export function UserForm({ existingUser, onSaveSuccess }: UserFormProps) {
     });
 
     const { run: saveUser, isLoading: isSubmitting } = useAsyncAction(
-      async (values: UserFormData) => {
-        if (isEditMode) {
-          await userService.update(existingUser.id, values);
-        } else {
-          await userService.create(values);
-        }
-      },
-      {
-        onSuccess: () => {
-          onSaveSuccess();
+        async (values: UserFormData) => {
+            if (isEditMode) {
+                await userService.update(existingUser.id, values);
+            } else {
+                await userService.create(values);
+            }
         },
-      }
+        {
+            onSuccess: () => {
+                onSaveSuccess();
+            },
+        }
     );
 
     return (
@@ -81,8 +81,8 @@ export function UserForm({ existingUser, onSaveSuccess }: UserFormProps) {
                 <FormField control={form.control} name="role" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Role</FormLabel>
-                        <Select 
-                            onValueChange={field.onChange} 
+                        <Select
+                            onValueChange={field.onChange}
                             defaultValue={field.value}
                             disabled={roleAccess !== 'write'}
                         >
@@ -99,7 +99,7 @@ export function UserForm({ existingUser, onSaveSuccess }: UserFormProps) {
                 )} />
 
                 <Button type="submit" disabled={isSubmitting} className="w-full">
-                     {isSubmitting ? (
+                    {isSubmitting ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             Saving...

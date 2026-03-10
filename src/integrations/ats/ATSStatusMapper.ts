@@ -9,7 +9,8 @@ import { atsConfig } from './mockATSData';
  * @returns The equivalent status string for the external ATS.
  */
 function toATS(internalStatus: ApplicationStatus, providerName: string): string {
-  const mapping = atsConfig.statusMappings[providerName]?.internalToExternal;
+  const providerKey = providerName as keyof typeof atsConfig.statusMappings;
+  const mapping = atsConfig.statusMappings[providerKey]?.internalToExternal;
   if (mapping && mapping[internalStatus]) {
     return mapping[internalStatus];
   }
@@ -24,12 +25,13 @@ function toATS(internalStatus: ApplicationStatus, providerName: string): string 
  * @returns The equivalent internal ApplicationStatus.
  */
 function toInternal(externalStatus: string, providerName: string): ApplicationStatus {
-  const mapping = atsConfig.statusMappings[providerName]?.externalToInternal;
+  const providerKey = providerName as keyof typeof atsConfig.statusMappings;
+  const mapping = atsConfig.statusMappings[providerKey]?.externalToInternal;
   if (mapping && mapping[externalStatus]) {
     return mapping[externalStatus];
   }
   // Fallback if no specific mapping is found
-  return 'UNDER_REVIEW';
+  return 'SCREENED';
 }
 
 export const atsStatusMapper = {

@@ -2,10 +2,11 @@
 import { Interview, InterviewStatus } from "@/modules/interviews/domain/interview.entity";
 
 export const mockInterviews: Interview[] = [
-    { 
-        id: 'interview-1', 
+    {
+        id: 'interview-1',
         applicationId: 'app-1',
         candidateId: 'candidate-1',
+        candidateName: 'John Doe',
         jobTitle: 'Senior Frontend Engineer',
         stage: 'TECHNICAL_ROUND',
         scheduledAt: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
@@ -15,10 +16,11 @@ export const mockInterviews: Interview[] = [
         status: 'SCHEDULED',
         createdAt: new Date().toISOString()
     },
-    { 
-        id: 'interview-2', 
+    {
+        id: 'interview-2',
         applicationId: 'app-2',
         candidateId: 'candidate-2',
+        candidateName: 'Jane Smith',
         jobTitle: 'Senior Frontend Engineer',
         stage: 'FINAL_ROUND',
         scheduledAt: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000), // 5 days from now

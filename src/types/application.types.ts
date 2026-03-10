@@ -24,6 +24,20 @@ export interface ApplicationWithCandidate extends Application {
     candidateEmail: string;
 }
 
+// Importing these carefully just for the typing
+import type { Candidate } from './candidate.types';
+import type { Interview } from '@/modules/interviews/domain/interview.entity';
+import type { StageHistory } from './stageHistory.types';
+import type { Document } from './document.types';
+
+export interface ApplicationDetails {
+    application: Application;
+    candidate: Candidate;
+    interviews: Interview[];
+    stageHistory: StageHistory[];
+    documents: Document[];
+}
+
 const fileSchema = z.any().optional();
 
 export const multiPhaseApplicationSchema = z.object({

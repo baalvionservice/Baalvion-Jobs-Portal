@@ -39,13 +39,13 @@ export const mockOffers: Offer[] = [
         currency: 'EUR',
         status: 'REJECTED',
         approvals: [
-             { approverId: '2', approverName: 'Recruiter (Acme)', status: 'Approved', timestamp: new Date() },
+            { approverId: '2', approverName: 'Recruiter (Acme)', status: 'Approved', timestamp: new Date() },
         ]
     }
 ];
 
 export const mockOfferData: OfferData = {
     application: mockApplications.find(app => app.id === 'app-2')!,
-    candidate: mockCandidates.find(c => c.id === 'candidate-2')!,
+    candidate: mockCandidates.find(c => c.id === 'candidate-2')! as any,
     offer: mockOffers[0],
 };

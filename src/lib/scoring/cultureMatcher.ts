@@ -1,14 +1,14 @@
-import type { Candidate, Job } from '@/lib/types';
+import type { Candidate, Job } from '@/types';
 import { calculateSkillScore } from './skillMatcher';
 
 export function calculateCultureScore(candidate: Candidate, job: Job): number {
     // Mock logic for "culture fit"
     const experience = candidate.parsedData?.workExperience || [];
     const totalExperienceYears = (candidate.parsedData?.totalExperienceMonths || 0) / 12;
-    
+
     // Check for "job hopping" - simple version: average duration per job < 1.5 years
     const averageDurationMonths = experience.length > 0
-        ? experience.reduce((acc, exp) => acc + (exp.durationMonths || 0), 0) / experience.length
+        ? experience.reduce((acc: number, exp: any) => acc + (exp.durationMonths || 0), 0) / experience.length
         : 0;
     const isJobHopper = experience.length > 2 && averageDurationMonths < 18;
 

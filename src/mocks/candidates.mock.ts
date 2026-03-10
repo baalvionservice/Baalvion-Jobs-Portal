@@ -8,7 +8,8 @@ export const mockCandidates: Candidate[] =
     phone: "999-999-9999",
     jobTitle: i % 5 === 0 ? "Lead Product Designer" : "Frontend Engineer",
     experienceYears: Math.floor(Math.random() * 8) + 1,
-    stage: (["APPLIED","SCREENING","INTERVIEW","OFFER"] as CandidateStage[])[i % 4],
+    stage: (["APPLIED", "SCREENING", "INTERVIEW", "OFFER"] as CandidateStage[])[i % 4],
     rating: Math.floor(Math.random() * 5) + 1,
     createdAt: new Date(Date.now() - i * 2 * 24 * 60 * 60 * 1000).toISOString(),
+    tenantId: "default-tenant",
   }));

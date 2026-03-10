@@ -39,8 +39,16 @@ export const rolePermissionMatrix: Record<UserRole, Permission[]> = {
     'interviews.feedback',
   ],
   FINANCE: [
-      'offers.view',
-      'offers.edit',
+    'offers.view',
+    'offers.edit',
+  ],
+  CLIENT: [
+    'dashboard.view',
+    'projects.view',
+  ],
+  CONTRACTOR: [
+    'dashboard.view',
+    'projects.view',
   ],
   CANDIDATE: [], // No admin permissions
 };

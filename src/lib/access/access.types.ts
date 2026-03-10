@@ -2,10 +2,16 @@
 export type UserRole =
   | 'SUPER_ADMIN'
   | 'ADMIN'
+  | 'CLIENT'
   | 'RECRUITER'
   | 'INTERVIEWER'
+  | 'CONTRACTOR'
   | 'FINANCE'
   | 'CANDIDATE';
+
+export const userRoles: [UserRole, ...UserRole[]] = [
+  'SUPER_ADMIN', 'ADMIN', 'CLIENT', 'RECRUITER', 'INTERVIEWER', 'CONTRACTOR', 'FINANCE', 'CANDIDATE'
+];
 
 // All roles that can access the admin panel, for broad checks
 export const ALL_ADMIN_ROLES: UserRole[] = ['SUPER_ADMIN', 'ADMIN', 'RECRUITER', 'INTERVIEWER', 'FINANCE'];

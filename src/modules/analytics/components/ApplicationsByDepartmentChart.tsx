@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 
 interface ApplicationsByDepartmentChartProps {
-    data: { department: string; applications: number }[];
+    data: { department: string;}[];
 }
 
 const chartConfig = {

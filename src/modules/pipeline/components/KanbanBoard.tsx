@@ -34,6 +34,8 @@ const STAGE_TITLES: Record<ApplicationStatus, string> = {
     OFFER: 'Offer Extended',
     HIRED: 'Hired',
     REJECTED: 'Rejected',
+    INTERVIEW: 'Interview',
+    PLACED: 'Placed',
 };
 
 export function KanbanBoard({ initialApplications, jobId }: KanbanBoardProps) {
@@ -50,7 +52,7 @@ export function KanbanBoard({ initialApplications, jobId }: KanbanBoardProps) {
         });
         return groups;
     });
-    
+
     const [activeApplication, setActiveApplication] = useState<ApplicationWithCandidate | null>(null);
 
     const sensors = useSensors(useSensor(PointerSensor));
@@ -70,7 +72,7 @@ export function KanbanBoard({ initialApplications, jobId }: KanbanBoardProps) {
             setActiveApplication(applications[container].find(app => app.id === activeId) || null);
         }
     };
-    
+
     const handleDragOver = (event: DragOverEvent) => {
         const { active, over } = event;
         if (!over) return;
@@ -126,7 +128,7 @@ export function KanbanBoard({ initialApplications, jobId }: KanbanBoardProps) {
             setActiveApplication(null);
             return;
         }
-        
+
         const newStage = overContainer;
         const oldStage = activeContainer;
 
@@ -149,7 +151,7 @@ export function KanbanBoard({ initialApplications, jobId }: KanbanBoardProps) {
                 setApplications(prev => {
                     const movedApp = applications[newStage].find(app => app.id === activeId);
                     if (!movedApp) return prev;
-                    
+
                     return {
                         ...prev,
                         [newStage]: prev[newStage].filter(app => app.id !== activeId),
@@ -158,7 +160,7 @@ export function KanbanBoard({ initialApplications, jobId }: KanbanBoardProps) {
                 });
             }
         }
-        
+
         setActiveApplication(null);
     };
 

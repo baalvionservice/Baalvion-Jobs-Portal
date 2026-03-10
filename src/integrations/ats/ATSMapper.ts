@@ -1,6 +1,11 @@
-
-import { Application, Job } from '@/types';
-import { ATSApplicationPayload, ATSJobPayload, InternalApplication, InternalJob } from './types';
+import { Application } from '@/types';
+import { Job } from '@/lib/talent-acquisition/types/job';
+import {
+  ATSApplicationPayload,
+  ATSJobPayload,
+  InternalApplication,
+  InternalJob,
+} from './types';
 
 /**
  * Normalizes the internal, detailed Job object into a simpler,
@@ -13,11 +18,11 @@ function normalizeJob(job: Job): InternalJob {
     id: job.id,
     title: job.title,
     description: job.description,
-    country: job.countries.length > 0 ? job.countries[0].countryCode : 'Unknown',
-    department: job.department,
+    country: job.countryId || 'Unknown',
+    department: job.departmentId,
     employmentType: job.employmentType,
-    publishDate: job.publishSchedule?.publishAt || new Date().toISOString(),
-    expiryDate: job.publishSchedule?.closeAt,
+    publishDate: job.publishStartDate || new Date().toISOString(),
+    expiryDate: job.publishEndDate,
     status: job.status,
   };
 }
@@ -47,7 +52,6 @@ function normalizeApplication(application: Application): InternalApplication {
   };
 }
 
-
 /**
  * Maps a normalized internal job to a generic payload for an ATS provider.
  * This is where you would add any provider-specific field transformations if needed,
@@ -67,13 +71,14 @@ function mapJobToPayload(internalJob: InternalJob): ATSJobPayload {
   };
 }
 
-
 /**
  * Maps a normalized internal application to a generic payload for an ATS provider.
  * @param internalApplication - The normalized internal application.
  * @returns A generic ATSApplicationPayload.
  */
-function mapApplicationToPayload(internalApplication: InternalApplication): ATSApplicationPayload {
+function mapApplicationToPayload(
+  internalApplication: InternalApplication,
+): ATSApplicationPayload {
   return {
     internalId: internalApplication.id,
     internalJobId: internalApplication.jobId,

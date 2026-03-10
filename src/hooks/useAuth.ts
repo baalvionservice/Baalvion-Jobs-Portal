@@ -14,10 +14,11 @@ export const useAuth = () => {
     setIsLoading(true);
     const mockUser = {
         id: '1',
-        fullName: 'Test User',
+        name: 'Test User',
         email: 'test@example.com',
         role: 'CLIENT' as UserRole,
         isActive: true,
+        avatarUrl: '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
     };

@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import { Candidate, Application } from '@/types';
+import { OfferStatus } from '@/types/offer.types';
 
 export const offerStatuses = ['DRAFT', 'PENDING_APPROVAL', 'APPROVED', 'SENT', 'ACCEPTED', 'REJECTED', 'EXPIRED'] as const;
-export type OfferStatus = typeof offerStatuses[number];
+export type { OfferStatus };
 
 export type ApprovalStatus = 'Pending' | 'Approved' | 'Rejected';
 

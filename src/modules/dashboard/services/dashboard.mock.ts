@@ -21,25 +21,25 @@ export const dashboardMockService = {
         offers,
         allCandidatesResponse,
       ] = await Promise.all([
-        talentService.getJobs({ limit: 1000 }), // Get all jobs for stats
+        talentService.getJobs({ page: 1, limit: 1000 }), // Get all jobs for stats
         candidateService.getLatestCandidates(5),
         interviewService.getAllInterviews(),
         offerService.getAll(),
-        candidateService.getCandidates({ limit: 1000 }), // For pipeline stats
+        candidateService.getCandidates({ page: 1, limit: 1000 }), // For pipeline stats
       ]);
 
       const openJobs = jobsResponse.data.filter(job => job.status === 'published');
-      
-      const newCandidatesCount = latestCandidates.filter(c => 
-          new Date(c.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+
+      const newCandidatesCount = latestCandidates.filter(c =>
+        new Date(c.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
       ).length;
 
       const interviewsToday = interviews.filter(i => {
-          const interviewDate = new Date(i.scheduledAt);
-          const today = new Date();
-          return interviewDate.getDate() === today.getDate() &&
-                 interviewDate.getMonth() === today.getMonth() &&
-                 interviewDate.getFullYear() === today.getFullYear();
+        const interviewDate = new Date(i.scheduledAt);
+        const today = new Date();
+        return interviewDate.getDate() === today.getDate() &&
+          interviewDate.getMonth() === today.getMonth() &&
+          interviewDate.getFullYear() === today.getFullYear();
       }).length;
 
       const offersPending = offers.filter(o => o.status === 'PENDING_APPROVAL' || o.status === 'SENT').length;
@@ -54,7 +54,7 @@ export const dashboardMockService = {
       const pipelineCounts = allCandidatesResponse.data.reduce((acc, candidate) => {
         const stage = candidate.stage;
         if (stage !== 'HIRED' && stage !== 'REJECTED') {
-            acc[stage] = (acc[stage] || 0) + 1;
+          acc[stage] = (acc[stage] || 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);
@@ -68,18 +68,18 @@ export const dashboardMockService = {
       return {
         stats,
         latestCandidates,
-        openPositions: openJobs.slice(0, 5),
+        openPositions: openJobs.slice(0, 5).map(j => ({ id: j.id, title: j.title, department: j.departmentId, applicants: Math.floor(Math.random() * 50) })),
         pipelineOverview,
       };
     } catch (error) {
-        console.error("Error fetching mock dashboard data:", error);
-        // Return a default empty state on error
-        return {
-            stats: { openJobs: 0, newCandidates: 0, interviewsToday: 0, offersPending: 0 },
-            latestCandidates: [],
-            openPositions: [],
-            pipelineOverview: [],
-        }
+      console.error("Error fetching mock dashboard data:", error);
+      // Return a default empty state on error
+      return {
+        stats: { openJobs: 0, newCandidates: 0, interviewsToday: 0, offersPending: 0 },
+        latestCandidates: [],
+        openPositions: [],
+        pipelineOverview: [],
+      }
     }
   },
 };

@@ -20,4 +20,10 @@ export const MOCK_ROLES: Record<UserRole, { description: string }> = {
   CANDIDATE: {
     description: "Can apply for jobs and track their own application status.",
   },
+  CLIENT: {
+    description: "Can create projects and manage their own projects.",
+  },
+  CONTRACTOR: {
+    description: "Can apply to projects and complete assigned work.",
+  },
 };

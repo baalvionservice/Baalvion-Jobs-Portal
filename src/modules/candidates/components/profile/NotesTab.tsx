@@ -24,7 +24,7 @@ export function NotesTab({ candidateId, initialNotes }: NotesTabProps) {
 
     const handleAddNote = async () => {
         if (!newNote.trim() || !user) return;
-        
+
         setIsSubmitting(true);
         try {
             const addedNote = await noteService.addNote({
@@ -35,9 +35,9 @@ export function NotesTab({ candidateId, initialNotes }: NotesTabProps) {
             });
             setNotes([addedNote, ...notes]);
             setNewNote("");
-            showToast({ type: 'success', title: 'Note Added' });
+            showToast({ type: 'success', title: 'Note Added', description: 'Your note has been saved.' });
         } catch (error) {
-            showToast({ type: 'error', title: 'Failed to add note' });
+            showToast({ type: 'error', title: 'Failed to add note', description: 'An error occurred while saving.' });
         } finally {
             setIsSubmitting(false);
         }
@@ -48,8 +48,8 @@ export function NotesTab({ candidateId, initialNotes }: NotesTabProps) {
             <CardHeader><CardTitle>Internal Notes</CardTitle></CardHeader>
             <CardContent className="space-y-6">
                 <div className="space-y-4">
-                    <Textarea 
-                        placeholder="Add a new note..." 
+                    <Textarea
+                        placeholder="Add a new note..."
                         value={newNote}
                         onChange={(e) => setNewNote(e.target.value)}
                         className="min-h-[100px]"
