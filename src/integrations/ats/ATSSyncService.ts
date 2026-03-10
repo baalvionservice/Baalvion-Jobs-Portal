@@ -23,7 +23,7 @@ async function logEvent(eventData: Omit<ATSIntegrationEvent, 'id' | 'timestamp'>
  * @param job - The internal Job object.
  */
 async function syncJobToATS(job: Job): Promise<void> {
-  const provider = atsRegistry.getProviderForCountry(job.countries[0].countryCode);
+  const provider = atsRegistry.getProviderForCountry(job.countryId);
   if (!provider) {
     await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'JOB', entityId: job.id, provider: 'N/A', status: 'FAILED', error: 'No provider configured for job country.' });
     return;
@@ -52,27 +52,27 @@ async function syncJobToATS(job: Job): Promise<void> {
  * @param application - The internal Application object.
  */
 async function syncApplicationToATS(application: Application): Promise<void> {
-    const job = {} as Job; // Placeholder: Fetch job from jobService using application.jobId
-    const provider = atsRegistry.getProviderForCountry('IN'); // Placeholder
-    if (!provider) {
-        await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'APPLICATION', entityId: application.id, provider: 'N/A', status: 'FAILED', error: 'No provider configured for job country.' });
-        return;
-    }
-    
-    const internalApp = atsMapper.normalizeApplication(application);
-    const payload = atsMapper.mapApplicationToPayload(internalApp);
+  const job = {} as Job; // Placeholder: Fetch job from jobService using application.jobId
+  const provider = atsRegistry.getProviderForCountry('IN'); // Placeholder
+  if (!provider) {
+    await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'APPLICATION', entityId: application.id, provider: 'N/A', status: 'FAILED', error: 'No provider configured for job country.' });
+    return;
+  }
 
-    try {
-        const response = await provider.pushApplication(payload);
-        if(response.success) {
-            await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'APPLICATION', entityId: application.id, provider: provider.name, status: 'SUCCESS' });
-        } else {
-            throw new Error(response.error || 'Unknown application sync error.');
-        }
-    } catch(error: any) {
-         await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'APPLICATION', entityId: application.id, provider: provider.name, status: 'FAILED', error: error.message });
-        atsRetryQueue.enqueue({ providerName: provider.name, entityType: 'APPLICATION', entityId: application.id, payload });
+  const internalApp = atsMapper.normalizeApplication(application);
+  const payload = atsMapper.mapApplicationToPayload(internalApp);
+
+  try {
+    const response = await provider.pushApplication(payload);
+    if (response.success) {
+      await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'APPLICATION', entityId: application.id, provider: provider.name, status: 'SUCCESS' });
+    } else {
+      throw new Error(response.error || 'Unknown application sync error.');
     }
+  } catch (error: any) {
+    await logEvent({ type: 'OUTBOUND_SYNC', entityType: 'APPLICATION', entityId: application.id, provider: provider.name, status: 'FAILED', error: error.message });
+    atsRetryQueue.enqueue({ providerName: provider.name, entityType: 'APPLICATION', entityId: application.id, payload });
+  }
 }
 
 export const atsSyncService = {

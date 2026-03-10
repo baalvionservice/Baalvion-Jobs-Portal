@@ -1,11 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
@@ -57,31 +57,31 @@ export function ApplicationDetailDrawer({ applicationId, isOpen, onClose }: Appl
     return (
         <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
             <SheetContent className="w-full sm:max-w-2xl">
-                 <SheetHeader>
+                <SheetHeader>
                     <SheetTitle>Application Details</SheetTitle>
                     {application && <SheetDescription>For {application.fullName} - {application.jobTitle}</SheetDescription>}
                 </SheetHeader>
                 <ScrollArea className="h-[calc(100vh-80px)] pr-6">
                     <div className="py-8">
-                         {isLoading ? (
+                        {isLoading ? (
                             <div className="flex justify-center items-center h-64">
                                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                             </div>
-                         ) : !application ? (
+                        ) : !application ? (
                             <p className="text-center text-muted-foreground">Application data not found.</p>
-                         ) : (
+                        ) : (
                             <div className="space-y-6">
                                 <DetailSection title="Basic Information">
                                     <DetailItem label="Full Name" value={application.fullName} />
                                     <DetailItem label="Email" value={application.email} />
                                     <DetailItem label="Phone" value={application.phone} />
-                                    <DetailItem label="Location" value={application.preferredLocation} />
+                                    <DetailItem label="Work Model" value={application.preferredWorkModel} />
                                     <DetailItem label="Discovered Via" value={application.sourceOfDiscovery} />
                                     <DetailItem label="LinkedIn" value={application.linkedinUrl} />
                                     <DetailItem label="Portfolio" value={application.portfolioUrl} />
                                 </DetailSection>
-                                 <DetailSection title="Skills & Projects">
-                                    <DetailItem label="Key Skills" value={application.keySkills} />
+                                <DetailSection title="Skills & Projects">
+                                    <DetailItem label="Primary Expertise" value={application.primaryExpertise} />
                                     <div className="grid grid-cols-3 gap-2">
                                         <span className="text-muted-foreground col-span-1">Projects</span>
                                         <p className="col-span-2 whitespace-pre-wrap">{application.projects}</p>
@@ -99,7 +99,7 @@ export function ApplicationDetailDrawer({ applicationId, isOpen, onClose }: Appl
                                     </div>
                                 </DetailSection>
                             </div>
-                         )}
+                        )}
                     </div>
                 </ScrollArea>
             </SheetContent>

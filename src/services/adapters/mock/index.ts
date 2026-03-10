@@ -24,134 +24,139 @@ import { campusMockService } from './campus.mock';
 import { placementMockService } from './placement.mock';
 
 export const mockAdapter: ApiAdapter = {
-    // Auth
-    login: authMockService.login,
-    logout: authMockService.logout,
-    checkSession: authMockService.checkSession,
-    
-    // User
-    getUsers: userMockService.getUsers,
-    getUserById: userMockService.getUserById,
-    create: userMockService.create,
-    update: userMockService.update,
-    deleteUser: userMockService.delete,
+  // Auth
+  login: authMockService.login,
+  logout: authMockService.logout,
+  checkSession: authMockService.checkSession,
 
-    // Job (This is a temporary bridge)
-    getJobs: (params: AdminJobsQueryParams): Promise<PaginatedResponse<TalentJob>> => {
-        return talentMockService.getJobs(params) as unknown as Promise<PaginatedResponse<TalentJob>>;
-    },
+  // User
+  getUsers: userMockService.getUsers,
+  getUserById: userMockService.getUserById,
+  create: userMockService.create,
+  update: userMockService.update,
+  deleteUser: userMockService.delete,
 
-    // Candidate
-    getCandidates: candidateMockService.getCandidates,
-    getCandidateById: candidateMockService.getById,
-    getLatestCandidates: candidateMockService.getLatestCandidates,
-    updateCandidateStatus: candidateMockService.updateStatus,
-    createCandidate: candidateMockService.create,
-    getCandidateProfile: candidateMockService.getCandidateProfile,
+  // Job (This is a temporary bridge)
+  getJobs: (
+    params: AdminJobsQueryParams,
+  ): Promise<PaginatedResponse<TalentJob>> => {
+    return talentMockService.getJobs(params) as unknown as Promise<
+      PaginatedResponse<TalentJob>
+    >;
+  },
 
-    // Application
-    getApplications: applicationMockService.getApplications,
-    getApplicationsForUser: applicationMockService.getApplicationsForUser,
-    getApplicationDetails: applicationMockService.getApplicationDetails,
-    updateApplicationStatus: applicationMockService.updateApplicationStatus,
-    scheduleInterview: applicationMockService.scheduleInterview,
-    sendOffer: applicationMockService.sendOffer,
-    rejectApplication: applicationMockService.rejectApplication,
+  // Candidate
+  getCandidates: candidateMockService.getCandidates,
+  getCandidateById: candidateMockService.getById,
+  getLatestCandidates: candidateMockService.getLatestCandidates,
+  updateCandidateStatus: candidateMockService.updateStatus,
+  createCandidate: candidateMockService.create,
+  getCandidateProfile: candidateMockService.getCandidateProfile,
 
-    // Interview
-    getAllInterviews: interviewsMockService.getAllInterviews,
-    getInterviewsForCandidate: interviewsMockService.getInterviewsForCandidate,
-    schedule: interviewsMockService.schedule,
-    updateInterviewStatus: interviewsMockService.updateStatus,
-    submitInterviewFeedback: interviewsMockService.submitFeedback,
+  // Application
+  getApplications: applicationMockService.getApplications,
+  getApplicationsForUser: applicationMockService.getApplicationsForUser,
+  getApplicationDetails: applicationMockService.getApplicationDetails,
+  updateApplicationStatus: applicationMockService.updateApplicationStatus,
+  scheduleInterview: applicationMockService.scheduleInterview,
+  sendOffer: applicationMockService.sendOffer,
+  rejectApplication: applicationMockService.rejectApplication,
 
-    // Offer
-    getAllOffers: offerMockService.getAll,
-    deleteOffer: offerMockService.delete,
-    getOfferForApplication: offerMockService.getOfferForApplication,
-    createOffer: offerMockService.createOffer,
-    updateOfferStatus: offerMockService.updateOfferStatus,
-    getOffersForCandidate: offerMockService.getOffersForCandidate,
-    updateCandidateResponse: offerMockService.updateCandidateResponse,
-    
-    // Analytics
-    getDashboardData: analyticsMockService.getDashboardData,
+  // Interview
+  getAllInterviews: interviewsMockService.getAllInterviews,
+  getInterviewsForCandidate: interviewsMockService.getInterviewsForCandidate,
+  schedule: interviewsMockService.schedule,
+  updateInterviewStatus: interviewsMockService.updateStatus,
+  submitInterviewFeedback: interviewsMockService.submitFeedback,
 
-    // Audit
-    getAuditLogs: auditMockService.getAuditLogs,
-    logEvent: auditMockService.logEvent,
+  // Offer
+  getAllOffers: offerMockService.getAll,
+  deleteOffer: offerMockService.delete,
+  getOfferForApplication: offerMockService.getOfferForApplication,
+  createOffer: offerMockService.createOffer,
+  updateOfferStatus: offerMockService.updateOfferStatus,
+  getOffersForCandidate: offerMockService.getOffersForCandidate,
+  updateCandidateResponse: offerMockService.updateCandidateResponse,
 
-    // Notification
-    getNotifications: notificationMockService.getNotifications,
-    getNotificationsForCandidate: notificationMockService.getNotificationsForCandidate,
-    markAsRead: notificationMockService.markAsRead,
-    markAllAsRead: notificationMockService.markAllAsRead,
-    subscribeToNotifications: notificationMockService.subscribeToNotifications,
-    sendNotification: notificationMockService.sendNotification,
-    sendEmail: notificationMockService.sendEmail,
+  // Analytics
+  getDashboardData: analyticsMockService.getDashboardData,
 
-    // Project
-    getProjects: projectMockService.getProjects,
-    getProjectById: projectMockService.getProjectById,
-    updateProjectStatus: projectMockService.updateProjectStatus,
+  // Audit
+  getAuditLogs: auditMockService.getAuditLogs,
+  logEvent: auditMockService.logEvent,
 
-    // Organization
-    getUserOrganizations: organizationMockService.getUserOrganizations,
-    
-    // Note
-    getNotesForCandidate: noteMockService.getNotesForCandidate,
-    addNote: noteMockService.addNote,
+  // Notification
+  getNotifications: notificationMockService.getNotifications,
+  getNotificationsForCandidate:
+    notificationMockService.getNotificationsForCandidate,
+  markAsRead: notificationMockService.markAsRead,
+  markAllAsRead: notificationMockService.markAllAsRead,
+  subscribeToNotifications: notificationMockService.subscribeToNotifications,
+  sendNotification: notificationMockService.sendNotification,
+  sendEmail: notificationMockService.sendEmail,
 
-    // Document
-    getDocumentsForCandidate: documentMockService.getDocumentsForCandidate,
-    getAllDocuments: documentMockService.getAllDocuments,
-    requestDocumentDeletion: documentMockService.requestDocumentDeletion,
-    updateDocumentStatus: documentMockService.updateDocumentStatus,
-    approveDeletion: documentMockService.approveDeletion,
-    uploadDocument: documentMockService.uploadDocument,
-    
-    // Payment
-    getPayments: paymentMockService.getPayments,
-    approvePayment: paymentMockService.approvePayment,
-    rejectPayment: paymentMockService.rejectPayment,
-    
-    // Team
-    getTeamMembers: teamMockService.getTeamMembers,
-    getTeamMemberById: teamMockService.getTeamMemberById,
-    createTeamMember: teamMockService.createTeamMember,
-    updateTeamMember: teamMockService.updateTeamMember,
-    deleteTeamMember: teamMockService.deleteTeamMember,
-    
-    // Talent (Public)
-    getTalentCountries: talentMockService.getCountries,
-    getTalentCountryBySlug: talentMockService.getCountryBySlug,
-    getTalentCountryById: talentMockService.getCountryById,
-    getTalentDepartments: talentMockService.getDepartments,
-    getTalentJobs: talentMockService.getJobs,
-    getTalentJobById: talentMockService.getJobById,
-    getTalentComplianceProfile: talentMockService.getComplianceProfile,
-    getTalentRolesByCountry: talentMockService.getRolesByCountry,
+  // Project
+  getProjects: projectMockService.getProjects,
+  getProjectById: projectMockService.getProjectById,
+  updateProjectStatus: projectMockService.updateProjectStatus,
 
-    // College
-    getColleges: collegeMockService.getColleges,
-    getAllColleges: collegeMockService.getAllColleges,
-    createCollege: collegeMockService.createCollege,
-    updateCollege: collegeMockService.updateCollege,
-    deleteCollege: collegeMockService.deleteCollege,
+  // Organization
+  getUserOrganizations: organizationMockService.getUserOrganizations,
 
-    // Student
-    getStudents: studentMockService.getStudents,
-    getAllStudents: studentMockService.getAllStudents,
-    createStudent: studentMockService.createStudent,
-    updateStudent: studentMockService.updateStudent,
-    deleteStudent: studentMockService.deleteStudent,
+  // Note
+  getNotesForCandidate: noteMockService.getNotesForCandidate,
+  addNote: noteMockService.addNote,
 
-    // Placement
-    getPendingPlacements: placementMockService.getPendingPlacements,
-    getApprovedPlacements: placementMockService.getApprovedPlacements,
-    approvePlacement: placementMockService.approvePlacement,
+  // Document
+  getDocumentsForCandidate: documentMockService.getDocumentsForCandidate,
+  getAllDocuments: documentMockService.getAllDocuments,
+  requestDocumentDeletion: documentMockService.requestDocumentDeletion,
+  updateDocumentStatus: documentMockService.updateDocumentStatus,
+  approveDeletion: documentMockService.approveDeletion,
+  uploadDocument: documentMockService.uploadDocument,
 
-    // Campus
-    getAIMatches: campusMockService.getAIMatches,
-    getRecentPlacements: campusMockService.getRecentPlacements,
+  // Payment
+  getPayments: paymentMockService.getPayments,
+  approvePayment: paymentMockService.approvePayment,
+  rejectPayment: paymentMockService.rejectPayment,
+
+  // Team
+  getTeamMembers: teamMockService.getTeamMembers,
+  getTeamMemberById: teamMockService.getTeamMemberById,
+  createTeamMember: teamMockService.createTeamMember,
+  updateTeamMember: teamMockService.updateTeamMember,
+  deleteTeamMember: teamMockService.deleteTeamMember,
+
+  // Talent (Public)
+  getTalentCountries: talentMockService.getCountries,
+  getTalentCountryBySlug: talentMockService.getCountryBySlug,
+  getTalentCountryById: talentMockService.getCountryById,
+  getTalentDepartments: talentMockService.getDepartments,
+  getTalentJobs: talentMockService.getJobs,
+  getTalentJobById: talentMockService.getJobById,
+  getTalentComplianceProfile: talentMockService.getComplianceProfile,
+  getTalentRolesByCountry: talentMockService.getRolesByCountry,
+
+  // College
+  getColleges: collegeMockService.getColleges,
+  getAllColleges: collegeMockService.getAllColleges,
+  createCollege: collegeMockService.createCollege,
+  updateCollege: collegeMockService.updateCollege,
+  deleteCollege: collegeMockService.deleteCollege,
+
+  // Student
+  getStudents: studentMockService.getStudents,
+  getAllStudents: studentMockService.getAllStudents,
+  createStudent: studentMockService.createStudent,
+  updateStudent: studentMockService.updateStudent,
+  deleteStudent: studentMockService.deleteStudent,
+
+  // Placement
+  getPendingPlacements: placementMockService.getPendingPlacements,
+  getApprovedPlacements: placementMockService.getApprovedPlacements,
+  approvePlacement: placementMockService.approvePlacement,
+
+  // Campus
+  getAIMatches: campusMockService.getAIMatches,
+  getRecentPlacements: campusMockService.getRecentPlacements,
 };

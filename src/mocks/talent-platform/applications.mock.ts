@@ -44,11 +44,11 @@ export function addApplication(applicationData: MultiPhaseApplicationData): Mult
         id: `app_mock_${Date.now()}`
     };
     detailedApplications.unshift(newApp);
-    
+
     // Also create a summary record for the older application list
     const candidate = mockCandidates.find(c => c.email === newApp.email);
     const summaryApp: Application = {
-        id: newApp.id,
+        id: newApp.id!,
         candidateId: candidate?.id || `candidate-${Date.now()}`,
         jobId: newApp.jobId,
         status: 'APPLIED',

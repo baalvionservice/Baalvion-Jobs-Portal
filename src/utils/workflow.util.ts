@@ -1,13 +1,20 @@
-import { Job } from '@/types/job.types';
-import { WorkflowError, JobStatus, WorkflowActorRole } from '@/types/workflow.types';
-import { WORKFLOW_TRANSITIONS, TRANSITION_PERMISSIONS } from '@/constants/workflow.constants';
+import { Job } from '@/lib/talent-acquisition';
+import {
+  WorkflowError,
+  JobStatus,
+  WorkflowActorRole,
+} from '@/types/workflow.types';
+import {
+  WORKFLOW_TRANSITIONS,
+  TRANSITION_PERMISSIONS,
+} from '@/constants/workflow.constants';
 
 /**
  * Creates a structured workflow error object.
  */
 export function createWorkflowError(
   code: WorkflowError['code'],
-  message: string
+  message: string,
 ): WorkflowError {
   return { code, message };
 }
@@ -21,13 +28,13 @@ export function validateSchedule(job: Job): void {
   if (!job.publishSchedule?.publishAt) {
     throw createWorkflowError(
       'SCHEDULE_INVALID',
-      'Job must have a scheduled publish date to be moved to "scheduled" status.'
+      'Job must have a scheduled publish date to be moved to "scheduled" status.',
     );
   }
   if (new Date(job.publishSchedule.publishAt) <= new Date()) {
     throw createWorkflowError(
       'SCHEDULE_INVALID',
-      'Scheduled publish date must be in the future.'
+      'Scheduled publish date must be in the future.',
     );
   }
 }
@@ -45,7 +52,7 @@ export function isTransitionAllowed(from: JobStatus, to: JobStatus): boolean {
 export function isRoleAuthorized(
   from: JobStatus,
   to: JobStatus,
-  role: WorkflowActorRole
+  role: WorkflowActorRole,
 ): boolean {
   const transitionKey = `${from}_${to}`;
   const allowedRoles = TRANSITION_PERMISSIONS[transitionKey];

@@ -29,7 +29,7 @@ export function ApplicationsTab({ user }: ApplicationsTabProps) {
                     talentService.getJobs({}),
                 ]);
 
-                const jobsMap = new Map(jobs.map(job => [job.id, job.title]));
+                const jobsMap = new Map(jobs.data.map(job => [job.id, job.title]));
                 const augmentedApplications = userApplications.map(app => ({
                     ...app,
                     jobTitle: jobsMap.get(app.jobId) || 'Unknown Job',

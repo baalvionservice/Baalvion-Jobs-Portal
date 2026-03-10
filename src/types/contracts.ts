@@ -6,7 +6,8 @@
 // Enums
 // ---------------
 
-export type UserRole = "CLIENT" | "CONTRACTOR" | "ADMIN";
+import { UserRole } from '@/lib/access/access.types';
+export type { UserRole };
 
 export type ProjectStatus = "OPEN" | "ACTIVE" | "COMPLETED" | "DRAFT" | "GOVERNANCE_REVIEW";
 
@@ -24,7 +25,8 @@ export type MilestoneStatus = "DRAFT" | "ACTIVE" | "SUBMITTED" | "UNDER_REVIEW" 
 
 export interface User {
   id: string;
-  fullName: string;
+  name: string;
+  fullName?: string;
   email: string;
   avatarUrl: string;
   bio?: string;
@@ -63,9 +65,11 @@ export interface Project {
   status: ProjectStatus;
   startDate: string;
   endDate: string;
+  deadline?: string;
   maxTeamSize: number;
   roles: Role[];
   createdAt: string;
+  updatedAt?: string;
   clientId: string; // Added to link project to a client
   assignedContractorId?: string; // ID of the User (contractor) or Team leader
   milestones?: ProjectMilestone[];
@@ -74,6 +78,7 @@ export interface Project {
   budget: number;
   owner: string;
   currency: string;
+  country?: string;
 }
 
 export interface Member {
@@ -94,18 +99,22 @@ export interface Team {
   createdAt: string;
 }
 
+export interface MatchScore {
+  finalScore: number;
+  rankingPosition?: number;
+}
+
 export interface ProjectApplication {
   id: string;
   projectId: string;
   contractorId: string; // The user applying
   teamId?: string; // Optional team
+  roleId?: string;
   proposalText: string;
+  proposedBudget?: number;
   status: ApplicationStatus;
   createdAt: string;
-  matchScore?: {
-    finalScore: number;
-    rankingPosition?: number;
-  };
+  matchScore?: MatchScore;
 }
 
 
@@ -114,7 +123,7 @@ export interface Invitation {
   projectId: string;
   teamId: string;
   fromUserId: string;
-  toUserId:string;
+  toUserId: string;
   roleId: string;
   status: InvitationStatus;
   createdAt: string;
@@ -169,6 +178,7 @@ export interface PaginatedResponse<T> {
   total: number
   page: number
   limit: number
+  totalPages: number
 }
 
 export interface ApiResponse<T> {

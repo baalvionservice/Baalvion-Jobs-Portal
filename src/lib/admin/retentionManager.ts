@@ -29,7 +29,7 @@ export async function runDailyRetentionCheck() {
             const ninetyDaysFromNow = new Date();
             ninetyDaysFromNow.setDate(now.getDate() + 90);
 
-            batch.update(doc.ref, { 
+            batch.update(doc.ref, {
                 isDeleted: true,
                 deletionScheduledAt: ninetyDaysFromNow.toISOString()
             });
@@ -41,7 +41,6 @@ export async function runDailyRetentionCheck() {
         logAuditEvent({
             actionType: 'ADMIN_OVERRIDE',
             performedBy: 'system-cron',
-            companyId: 'platform-global', // This is a platform-level action
             details: {
                 job: 'runDailyRetentionCheck',
                 message: `Successfully flagged ${count} candidates for deletion.`
@@ -50,10 +49,9 @@ export async function runDailyRetentionCheck() {
         });
 
     } catch (error) {
-         logAuditEvent({
+        logAuditEvent({
             actionType: 'ADMIN_OVERRIDE',
             performedBy: 'system-cron',
-            companyId: 'platform-global',
             details: {
                 job: 'runDailyRetentionCheck',
                 error: (error as Error).message

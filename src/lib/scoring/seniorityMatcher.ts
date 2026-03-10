@@ -1,4 +1,4 @@
-import type { Candidate, Job } from '@/lib/types';
+import type { Candidate, Job } from '@/types';
 
 type SeniorityLevel = 'Junior' | 'Mid' | 'Senior' | 'Lead' | 'Mid-Senior';
 const levels: SeniorityLevel[] = ['Junior', 'Mid', 'Mid-Senior', 'Senior', 'Lead'];

@@ -14,11 +14,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // This simulates a user being logged in.
     setIsLoading(true);
     const mockUser: User = {
-      id: 'user-1',
-      fullName: 'Test User',
-      email: 'test@example.com',
+      id: 'admin-1',
+      name: 'Admin User',
+      fullName: 'Admin User',
+      email: 'admin@baalvion.com',
       role: 'SUPER_ADMIN',
-      avatarUrl: `https://i.pravatar.cc/150?u=testuser`,
+      avatarUrl: 'https://github.com/shadcn.png',
       isActive: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

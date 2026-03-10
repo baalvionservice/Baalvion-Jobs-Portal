@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
 
 interface JobDistributionBarChartProps {
-    data: { job: string; applications: number }[];
+    data: { job: string; count: number }[];
 }
 
 const chartConfig = {

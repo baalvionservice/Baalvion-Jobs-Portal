@@ -28,26 +28,26 @@ export function RankedApplicationList({ applications }: RankedApplicationListPro
     const [query, setQuery] = useState({ page: 1, limit: 10 });
 
     const handleAccept = (appName: string) => {
-        showToast({type: 'success', title: 'Contractor Selected!', description: `You have selected ${appName} for this project.`})
+        showToast({ type: 'success', title: 'Contractor Selected!', description: `You have selected ${appName} for this project.` })
     }
 
     const columns: DataColumn<ProjectApplication>[] = [
-        { 
-            key: 'rankingPosition', 
-            header: 'Rank', 
+        {
+            key: 'rankingPosition',
+            header: 'Rank',
             render: (row) => <div className="font-bold text-lg text-center">{row.matchScore?.rankingPosition}</div>,
             align: 'center'
         },
-        { 
-            key: 'contractor', 
+        {
+            key: 'contractor',
             header: 'Contractor',
             render: (row) => {
                 const contractor = getContractor(row.contractorId);
                 return (
                     <div className="flex items-center gap-3">
-                        <Avatar><AvatarImage src={contractor?.avatarUrl} /><AvatarFallback>{contractor?.fullName.charAt(0)}</AvatarFallback></Avatar>
+                        <Avatar><AvatarImage src={contractor?.avatarUrl} /><AvatarFallback>{(contractor?.fullName || contractor?.name || '?').charAt(0)}</AvatarFallback></Avatar>
                         <div>
-                            <p className="font-semibold">{contractor?.fullName}</p>
+                            <p className="font-semibold">{contractor?.fullName || contractor?.name}</p>
                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                 <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                                 <span>{contractor?.reputationSummary?.averageRating.toFixed(1)}</span>
@@ -58,12 +58,12 @@ export function RankedApplicationList({ applications }: RankedApplicationListPro
                 )
             }
         },
-        { 
-            key: 'finalScore', 
+        {
+            key: 'finalScore',
             header: 'Match Score',
             render: (row) => (
                 <div className="flex items-center gap-2">
-                    <Progress value={row.matchScore?.finalScore} className="w-24"/>
+                    <Progress value={row.matchScore?.finalScore} className="w-24" />
                     <span className="font-semibold">{row.matchScore?.finalScore}%</span>
                     {getTopMatchBadge(row.matchScore?.rankingPosition)}
                 </div>
@@ -76,12 +76,12 @@ export function RankedApplicationList({ applications }: RankedApplicationListPro
             render: (row) => (
                 <div className="flex gap-2 justify-end">
                     <Button variant="outline" size="sm">View Profile</Button>
-                    <Button size="sm" onClick={() => handleAccept(getContractor(row.contractorId)?.fullName || 'the contractor')}>Select Contractor</Button>
+                    <Button size="sm" onClick={() => handleAccept(getContractor(row.contractorId)?.fullName || getContractor(row.contractorId)?.name || 'the contractor')}>Select Contractor</Button>
                 </div>
             )
         }
     ];
-    
+
     return (
         <DataTable
             columns={columns}
@@ -91,7 +91,7 @@ export function RankedApplicationList({ applications }: RankedApplicationListPro
             setQuery={setQuery}
             totalCount={applications.length}
             totalPages={Math.ceil(applications.length / query.limit)}
-            onSelectionChange={() => {}}
+            onSelectionChange={() => { }}
             selectedRows={{}}
         />
     )

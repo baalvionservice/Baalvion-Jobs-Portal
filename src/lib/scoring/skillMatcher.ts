@@ -1,4 +1,4 @@
-import type { Job, Candidate } from '@/lib/types';
+import type { Job, Candidate } from '@/types';
 
 export function calculateSkillScore(candidate: Candidate, job: Job): number {
   const requiredSkills = job.requiredSkills || [];

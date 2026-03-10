@@ -5,6 +5,7 @@ export type Role = UserRole;
 export interface User {
     id: string;
     name: string;
+    fullName?: string;
     email: string;
     phone?: string;
     role: Role;

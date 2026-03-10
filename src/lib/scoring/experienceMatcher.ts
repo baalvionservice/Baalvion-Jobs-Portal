@@ -1,31 +1,35 @@
-import type { Candidate, Job } from '@/lib/types';
+import type { Candidate, Job } from '@/types';
 
 function parseExperienceYears(expString: string): number {
-    if (!expString) return 0;
-    const match = expString.match(/\d+/);
-    return match ? parseInt(match[0], 10) : 0;
+  if (!expString) return 0;
+  const match = expString.match(/\d+/);
+  return match ? parseInt(match[0], 10) : 0;
 }
 
-export function calculateExperienceScore(candidate: Candidate, job: Job): number {
-    const requiredMonths = parseExperienceYears(job.experienceRequired) * 12;
-    if (requiredMonths === 0) {
-        return 100; // No experience requirement specified.
-    }
+export function calculateExperienceScore(
+  candidate: Candidate,
+  job: Job,
+): number {
+  const requiredMonths =
+    parseExperienceYears(job.experienceRequired || '0') * 12;
+  if (requiredMonths === 0) {
+    return 100; // No experience requirement specified.
+  }
 
-    const candidateMonths = candidate.parsedData?.totalExperienceMonths || 0;
-    
-    if (candidateMonths >= requiredMonths) {
-        return 100;
-    }
+  const candidateMonths = candidate.parsedData?.totalExperienceMonths || 0;
 
-    const ratio = candidateMonths / requiredMonths;
+  if (candidateMonths >= requiredMonths) {
+    return 100;
+  }
 
-    if (ratio >= 0.8) {
-        return 75;
-    }
-    if (ratio >= 0.6) {
-        return 50;
-    }
+  const ratio = candidateMonths / requiredMonths;
 
-    return 25;
+  if (ratio >= 0.8) {
+    return 75;
+  }
+  if (ratio >= 0.6) {
+    return 50;
+  }
+
+  return 25;
 }

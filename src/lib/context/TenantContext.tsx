@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect, useCa
 import { useRouter } from 'next/navigation';
 import { Organization } from '@/features/organization/types';
 import { organizationService } from '@/services/organization.service';
-import { useAuth } from '@/lib/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
 
 const TENANT_STORAGE_KEY = 'talent-os-tenant-id';

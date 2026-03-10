@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { useTenant } from './TenantContext';
-import { useAuth } from '@/lib/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { notificationService } from '@/services/notification.service';
 import { Notification } from '@/features/notifications';
 import { useToast } from '@/components/system/Toast/useToast';

@@ -3,7 +3,7 @@ import { Application } from './application.types';
 import { Candidate } from './candidate.types';
 import { User } from './user.types';
 
-export type OfferStatus = 'DRAFT' | 'PENDING' | 'APPROVED' | 'SENT' | 'ACCEPTED' | 'DECLINED' | 'EXPIRED';
+export type OfferStatus = 'DRAFT' | 'PENDING' | 'PENDING_APPROVAL' | 'APPROVED' | 'SENT' | 'ACCEPTED' | 'DECLINED' | 'REJECTED' | 'EXPIRED';
 
 export interface Offer {
     id: string;

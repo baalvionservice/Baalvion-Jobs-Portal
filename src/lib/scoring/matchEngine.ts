@@ -4,8 +4,8 @@
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { initializeFirebase } from '@/firebase';
 import { updateDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { getAllJobs } from '@/lib/mockData/jobs';
-import type { Candidate, FitCategory, Job, ScoreBreakdown } from '@/lib/types';
+import { getAllJobs } from '@/domain/talent/jobs.data';
+import type { Candidate, FitCategory, Job, ScoreBreakdown } from '@/types';
 import { SCORING_WEIGHTS } from '@/config/scoringWeights';
 
 import { calculateCultureScore } from './cultureMatcher';
@@ -27,18 +27,18 @@ function getFitCategory(score: number): FitCategory {
 export async function calculateMatchScore(candidateId: string) {
     const { firestore } = initializeFirebase();
     const candidateRef = doc(firestore, 'candidates', candidateId);
-    
+
     try {
         const candidateSnap = await getDoc(candidateRef);
         if (!candidateSnap.exists()) {
             throw new Error(`Candidate with ID ${candidateId} not found.`);
         }
-        
+
         const candidate = candidateSnap.data() as Candidate;
-        
+
         // In a real app, this would be a Firestore query. Using mock jobs for now.
-        const job = getAllJobs().find(j => j.id === candidate.jobId);
-        
+        const job = getAllJobs().find((j: Job) => j.id === candidate.jobId);
+
         if (!job) {
             throw new Error(`Job with ID ${candidate.jobId} not found for candidate ${candidateId}.`);
         }
@@ -80,7 +80,7 @@ export async function calculateMatchScore(candidateId: string) {
 
         // 4. Get fit category
         const fitCategory = getFitCategory(finalScore);
-        
+
         // 5. Update Firestore document (non-blocking)
         const updatePayload = {
             matchScore: finalScore,
@@ -91,7 +91,7 @@ export async function calculateMatchScore(candidateId: string) {
         };
 
         updateDocumentNonBlocking(candidateRef, updatePayload);
-        
+
         return finalScore;
 
     } catch (error) {
