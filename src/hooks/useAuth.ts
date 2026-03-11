@@ -40,7 +40,7 @@ export const useAuth = () => {
     };
     setUser(mockUser);
     setRole(role);
-    router.push('/dashboard');
+    router.push(role === 'CANDIDATE' ? '/my-account' : '/dashboard');
     setIsLoading(false);
   };
 
