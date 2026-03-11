@@ -16,7 +16,7 @@ export const useAuth = () => {
         id: '1',
         name: 'Test User',
         email: 'test@example.com',
-        role: 'CLIENT' as UserRole,
+        role: 'ADMIN' as UserRole,
         isActive: true,
         avatarUrl: '',
         createdAt: new Date().toISOString(),

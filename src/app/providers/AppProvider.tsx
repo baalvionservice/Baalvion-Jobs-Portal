@@ -7,7 +7,7 @@ import { ToastProvider } from '@/components/system/Toast/ToastProvider';
 import { NetworkListener } from '@/components/system/NetworkListener';
 import { RequestProvider } from '@/lib/request/request.context';
 import { ThemeProvider } from '@/lib/context/ThemeContext';
-import { UIProvider } from '@/lib/context/UIContext';
+import { UIProvider } from '@/context/UIContext';
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   return (

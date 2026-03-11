@@ -14,14 +14,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <UIProvider>
-          <RequestProvider>
-            <ToastProvider>
-              <AuthProvider>{children}</AuthProvider>
-              <NetworkListener />
-            </ToastProvider>
-          </RequestProvider>
-        </UIProvider>
+        <RequestProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <UIProvider>
+                {children}
+              </UIProvider>
+            </AuthProvider>
+            <NetworkListener />
+          </ToastProvider>
+        </RequestProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
