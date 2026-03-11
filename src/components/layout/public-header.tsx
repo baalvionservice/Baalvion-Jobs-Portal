@@ -44,9 +44,14 @@ const NavLink = ({ href, children, className }: { href: string; children: React.
 
 const navItems = [
     { href: `/`, label: 'Home' },
-    { href: `/careers`, label: 'Global Careers' },
     { href: `/careers/open-positions`, label: 'Open Positions' },
-    { href: `/careers/hiring-process`, label: 'Hiring Process'},
+
+];
+
+const careersSubItems = [
+    { href: `/careers/hiring-process`, label: 'Hiring Process' },
+    { href: `/careers/hiring-strategy`, label: 'Hiring Strategy' },
+    { href: `/careers/life-at-baalvion`, label: 'Life at Baalvion' },
 ];
 
 const aboutSubItems = [
@@ -96,6 +101,18 @@ export function PublicHeader() {
                         <nav className="hidden md:flex items-center gap-8">
                             {navItems.map((item) => <NavLink key={item.label} href={item.href}>{item.label}</NavLink>)}
                             
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className={cn("flex items-center gap-1 text-sm font-medium transition-colors outline-none", isAboutActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground')}>
+                                    Careers <ChevronDown className="h-4 w-4" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    {careersSubItems.map((subItem) => (
+                                        <DropdownMenuItem key={subItem.label} asChild>
+                                            <Link href={subItem.href}>{subItem.label}</Link>
+                                        </DropdownMenuItem>
+                                    ))}
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                             <DropdownMenu>
                                 <DropdownMenuTrigger className={cn("flex items-center gap-1 text-sm font-medium transition-colors outline-none", isAboutActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground')}>
                                     About Us <ChevronDown className="h-4 w-4" />
@@ -154,6 +171,20 @@ export function PublicHeader() {
                                                 </Link>
                                             </SheetClose>
                                         ))}
+                                        <Collapsible>
+                                            <CollapsibleTrigger className="flex items-center justify-between w-full text-base font-medium">
+                                                Careers <ChevronDown className="h-4 w-4" />
+                                            </CollapsibleTrigger>
+                                            <CollapsibleContent className="pl-4 mt-2 flex flex-col gap-2">
+                                                {careersSubItems.map((item) => (
+                                                    <SheetClose asChild key={item.label}>
+                                                        <Link href={item.href} className="text-base text-muted-foreground">
+                                                            {item.label}
+                                                        </Link>
+                                                    </SheetClose>
+                                                ))}
+                                            </CollapsibleContent>
+                                        </Collapsible>
                                         <Collapsible>
                                             <CollapsibleTrigger className="flex items-center justify-between w-full text-base font-medium">
                                                 About Us <ChevronDown className="h-4 w-4" />
