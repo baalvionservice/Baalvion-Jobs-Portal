@@ -45,7 +45,7 @@ export default function AdminSidebar() {
               if (!hasPermission(item.allowedRoles)) {
                 return null;
               }
-              const isActive = pathname.startsWith(item.href) && (item.href !== '/dashboard' || pathname === '/dashboard');
+              const isActive = pathname.startsWith(item.href) && (item.href !== '/dashboard' || pathname === '/dashboard') && pathname.endsWith(item.href);
               return (
                 <li key={item.label}>
                    <Tooltip>
@@ -82,7 +82,7 @@ export default function AdminSidebar() {
 
   return (
     <aside className={cn(
-      "hidden md:flex flex-col border-r bg-background fixed h-full z-20 transition-all duration-300 ease-in-out",
+      "hidden md:flex flex-col border-r bg-background fixed h-screen overflow-y-auto z-20 transition-all duration-300 ease-in-out",
       isSidebarCollapsed ? "w-20" : "w-64"
     )}>
       {sidebarContent}
