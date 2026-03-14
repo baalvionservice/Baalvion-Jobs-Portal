@@ -46,7 +46,7 @@ const MobileSidebarContent = () => {
                     if (!hasPermission(item.allowedRoles)) {
                         return null;
                     }
-                    const isActive = item.href === '/analytics' ? pathname === item.href : pathname.startsWith(item.href);
+                    const isActive = item.href === '/analytics' ? pathname === item.href : (pathname.startsWith(item.href) && pathname.endsWith(item.href));
                     return (
                         <li key={item.label}>
                         <Link
