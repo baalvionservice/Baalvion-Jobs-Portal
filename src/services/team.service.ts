@@ -1,6 +1,6 @@
 import { adapter } from './adapter';
 import { TeamMember, teamMembers } from '@/lib/team.data';
-import { leadershipTeam, globalLeaders, VicePersidents } from '@/lib/data';
+import { leadershipTeam, globalLeaders } from '@/lib/data';
 
 // Convert data.ts format to TeamMember format
 const convertToTeamMember = (member: any, category: string): TeamMember => {
@@ -27,11 +27,9 @@ const getAllTeamMembers = (): TeamMember[] => {
   const global = globalLeaders.map((member) =>
     convertToTeamMember(member, 'Global Leaders'),
   );
-  const vps = VicePersidents.map((member) =>
-    convertToTeamMember(member, 'Vice Presidents'),
-  );
+ 
 
-  return [...teamMembers, ...leadership, ...global, ...vps];
+  return [...teamMembers, ...leadership, ...global];
 };
 
 export const teamService = {

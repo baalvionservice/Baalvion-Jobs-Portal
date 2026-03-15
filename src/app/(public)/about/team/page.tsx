@@ -6,7 +6,7 @@ import { teamService } from '@/services/team.service';
 import { ArrowRight, Zap } from 'lucide-react';
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { globalLeaders, leadershipTeam, VicePersidents } from '@/lib/data';
+import { globalLeaders, leadershipTeam } from '@/lib/data';
 import { Separator } from '@/components/ui/separator';
 import { TeamMember } from '@/lib/team.data';
 
@@ -46,9 +46,6 @@ export default async function TeamPage() {
   );
   const cofounders = globalLeaders.map((member) =>
     convertToTeamMember(member, 'Global Leaders'),
-  );
-  const vicePresidents = VicePersidents.map((member) =>
-    convertToTeamMember(member, 'Vice Presidents'),
   );
 
   const jsonLd = {
@@ -98,10 +95,6 @@ export default async function TeamPage() {
         <Separator className="h-32 bg-muted/40 border-b-2 mb-32 border-neutral-300 " />
         <div className="container mx-auto px-4">
           <TeamGrid members={cofounders} />
-        </div>
-        <Separator className="h-32 bg-muted/40 border-b-2 mb-32 border-neutral-300 " />
-        <div className="container mx-auto px-4">
-          <TeamGrid members={vicePresidents} />
         </div>
       </section>
 
