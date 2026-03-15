@@ -8,6 +8,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { globalLeaders, leadershipTeam, VicePersidents } from '@/lib/data';
 import { Separator } from '@/components/ui/separator';
+import { TeamMember } from '@/lib/team.data';
 
 export const metadata: Metadata = {
   title: 'Meet the Team | Baalvion',
@@ -22,11 +23,33 @@ const principles = [
   'Long-Term Vision: We build for the decade, not just the quarter, creating resilient and future-proof systems.',
 ];
 
+// Convert data.ts format to TeamMember format
+const convertToTeamMember = (member: any, category: string): TeamMember => {
+  return {
+    id: member.name.toLowerCase().replace(/\s+/g, '-'),
+    name: member.name,
+    role: member.title,
+    tagline: member.position || category,
+    bio: member.bio,
+    expertise: [],
+    socials: {
+      linkedin: '',
+    },
+    image: member.imageId || '',
+    imageHint: 'person portrait',
+  };
+};
+
 export default async function TeamPage() {
-  // const teamMembers = await teamService.getTeamMembers();
-  const leaders = leadershipTeam;
-  const cofounders = globalLeaders;
-  const vicePresidents = VicePersidents;
+  const leaders = leadershipTeam.map((member) =>
+    convertToTeamMember(member, 'Leadership Team'),
+  );
+  const cofounders = globalLeaders.map((member) =>
+    convertToTeamMember(member, 'Global Leaders'),
+  );
+  const vicePresidents = VicePersidents.map((member) =>
+    convertToTeamMember(member, 'Vice Presidents'),
+  );
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -40,9 +63,8 @@ export default async function TeamPage() {
       itemListElement: leaders.map((member) => ({
         '@type': 'Person',
         name: member.name,
-        jobTitle: member.title,
-        image: member.imageId,
-        // "url": member.socials.linkedin,
+        jobTitle: member.role,
+        image: member.image,
         description: member.bio,
       })),
     },
@@ -73,11 +95,11 @@ export default async function TeamPage() {
         <div className="container mx-auto px-4">
           <TeamGrid members={leaders} />
         </div>
-        <Separator className='h-32 bg-muted/40 border-b-2 mb-32 border-neutral-300 ' />
+        <Separator className="h-32 bg-muted/40 border-b-2 mb-32 border-neutral-300 " />
         <div className="container mx-auto px-4">
           <TeamGrid members={cofounders} />
         </div>
-        <Separator className='h-32 bg-muted/40 border-b-2 mb-32 border-neutral-300 ' />
+        <Separator className="h-32 bg-muted/40 border-b-2 mb-32 border-neutral-300 " />
         <div className="container mx-auto px-4">
           <TeamGrid members={vicePresidents} />
         </div>

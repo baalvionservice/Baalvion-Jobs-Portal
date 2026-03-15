@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2, PlusCircle, Trash2 } from "lucide-react";
 import { useAsyncAction } from "@/hooks/useAsyncAction";
 import { TeamMember } from "@/lib/team.data";
-import { teamService } from "@/services/team.service";
+// import { teamService } from "@/services/team.service";
 
 const teamMemberFormSchema = z.object({
   name: z.string().min(2, "Name is required."),
@@ -81,11 +81,11 @@ export function TeamMemberForm({ existingMember, onSaveSuccess }: TeamMemberForm
             payload.image = `https://picsum.photos/seed/${values.image.name}/400/500`;
         }
 
-        if (isEditMode) {
-          await teamService.updateTeamMember(existingMember.id, payload);
-        } else {
-          await teamService.createTeamMember(payload);
-        }
+        // if (isEditMode) {
+        //   await teamService.updateTeamMember(existingMember.id, payload);
+        // } else {
+        //   await teamService.createTeamMember(payload);
+        // }
       },
       {
         onSuccess: onSaveSuccess,

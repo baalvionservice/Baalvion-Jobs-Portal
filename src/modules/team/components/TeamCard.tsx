@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { TeamMember } from '@/mocks/team.mock';
+import { TeamMember } from '@/lib/team.data';
 import {
   Card,
   CardContent,
@@ -16,7 +16,7 @@ interface TeamCardProps {
 }
 
 export function TeamCard({ member, onClick }: TeamCardProps) {
-  const img = PlaceHolderImages.find((p) => p.id === member.imageId);
+  const img = PlaceHolderImages.find((p) => p.id === member.image);
   return (
     <Card
       className="group overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border"
@@ -37,9 +37,9 @@ export function TeamCard({ member, onClick }: TeamCardProps) {
       <CardHeader>
         <CardTitle className="text-lg">{member.name}</CardTitle>
 
-        <CardDescription>{member.title}</CardDescription>
+        <CardDescription>{member.role}</CardDescription>
         <CardDescription className="text-muted-foreground text-sm">
-          {member.position}
+          {member.tagline}
         </CardDescription>
       </CardHeader>
     </Card>
