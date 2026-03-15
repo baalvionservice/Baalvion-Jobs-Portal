@@ -27,7 +27,7 @@ export function TeamGrid({ members }: { members: TeamMember[]}) {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {members.map(member => (
-          <TeamCard key={member.id} member={member} onClick={() => handleOpenModal(member)} />
+          <TeamCard key={member.imageId} member={member} onClick={() => handleOpenModal(member)} />
         ))}
       </div>
       <TeamMemberModal member={selectedMember} isOpen={!!selectedMember} onClose={handleCloseModal} />
