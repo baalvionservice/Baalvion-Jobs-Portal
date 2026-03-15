@@ -13,7 +13,7 @@ import { documentMockService } from './document.mock';
 import { paymentMockService } from './payment.mock';
 import { analyticsMockService } from '@/modules/analytics/services/analytics.mock';
 import { projectMockService } from '@/modules/projects/services/project.mock';
-import { teamMockService } from './team.mock';
+// import { teamMockService } from './team.mock';
 import { talentMockService } from './talent.mock';
 import { PaginatedResponse, TableQuery } from '@/components/system/DataTable';
 import { Job as TalentJob } from '@/lib/talent-acquisition';
@@ -120,12 +120,12 @@ export const mockAdapter: ApiAdapter = {
   approvePayment: paymentMockService.approvePayment,
   rejectPayment: paymentMockService.rejectPayment,
 
-  // Team
-  getTeamMembers: teamMockService.getTeamMembers,
-  getTeamMemberById: teamMockService.getTeamMemberById,
-  createTeamMember: teamMockService.createTeamMember,
-  updateTeamMember: teamMockService.updateTeamMember,
-  deleteTeamMember: teamMockService.deleteTeamMember,
+  // // Team
+  // getTeamMembers: teamMockService.getTeamMembers,
+  // getTeamMemberById: teamMockService.getTeamMemberById,
+  // createTeamMember: teamMockService.createTeamMember,
+  // updateTeamMember: teamMockService.updateTeamMember,
+  // deleteTeamMember: teamMockService.deleteTeamMember,
 
   // Talent (Public)
   getTalentCountries: talentMockService.getCountries,

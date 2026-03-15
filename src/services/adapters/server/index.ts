@@ -145,11 +145,11 @@ export const serverAdapter: ApiAdapter = {
   approveDeletion: (documentId: string) =>
     Promise.reject(new Error('Not implemented')),
   uploadDocument: (data: any) => Promise.reject(new Error('Not implemented')),
-  createTeamMember: (data: any) => Promise.reject(new Error('Not implemented')),
-  updateTeamMember: (id: string, data: any) =>
-    Promise.reject(new Error('Not implemented')),
-  deleteTeamMember: (id: string) =>
-    Promise.reject(new Error('Not implemented')),
+  // createTeamMember: (data: any) => Promise.reject(new Error('Not implemented')),
+  // updateTeamMember: (id: string, data: any) =>
+    // Promise.reject(new Error('Not implemented')),
+  // deleteTeamMember: (id: string) =>
+    // Promise.reject(new Error('Not implemented')),
   deleteUser: (id: string) => Promise.reject(new Error('Not implemented')),
   logEvent: (event: any) => Promise.reject(new Error('Not implemented')),
   markAsRead: (id: string) => Promise.reject(new Error('Not implemented')),

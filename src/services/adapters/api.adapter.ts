@@ -43,7 +43,7 @@ import {
 import { AuthUser } from '@/modules/auth/domain/user.types';
 import { Organization } from '@/features/organization';
 import { Notification } from '@/features/notifications';
-import { TeamMember } from '@/lib/team.data';
+// import { TeamMember } from '@/lib/team.data';
 import {
   Job as TalentJob,
   Country,
@@ -188,11 +188,11 @@ export interface ApiAdapter {
   rejectPayment(id: string): Promise<Payment>;
 
   // Team
-  getTeamMembers(): Promise<TeamMember[]>;
-  getTeamMemberById(id: string): Promise<TeamMember | undefined>;
-  createTeamMember(data: Omit<TeamMember, 'id'>): Promise<TeamMember>;
-  updateTeamMember(id: string, data: Partial<TeamMember>): Promise<TeamMember>;
-  deleteTeamMember(id: string): Promise<{ success: boolean }>;
+  // getTeamMembers(): Promise<TeamMember[]>;
+  // getTeamMemberById(id: string): Promise<TeamMember | undefined>;
+  // createTeamMember(data: Omit<TeamMember, 'id'>): Promise<TeamMember>;
+  // updateTeamMember(id: string, data: Partial<TeamMember>): Promise<TeamMember>;
+  // deleteTeamMember(id: string): Promise<{ success: boolean }>;
 
   // Talent (Public)
   getTalentCountries(filters: { isActive?: boolean }): Promise<Country[]>;
