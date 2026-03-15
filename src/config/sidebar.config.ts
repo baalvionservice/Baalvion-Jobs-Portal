@@ -171,12 +171,12 @@ export const ADMIN_SIDEBAR_CONFIG: SidebarItem[] = [
     icon: BookUser,
     allowedRoles: ["ADMIN", "SUPER_ADMIN"],
   },
-  {
-    href: "/team",
-    label: "Public Team",
-    icon: Building2,
-    allowedRoles: ["ADMIN", "SUPER_ADMIN"],
-  },
+  // {
+  //   href: "/team",
+  //   label: "Public Team",
+  //   icon: Building2,
+  //   allowedRoles: ["ADMIN", "SUPER_ADMIN"],
+  // },
   {
     href: "/roles",
     label: "Roles & Permissions",
