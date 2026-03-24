@@ -56,6 +56,7 @@ const careersSubItems = [
 
 const aboutSubItems = [
     { href: `/about`, label: 'About Us' },
+    { href: `/new-skills`, label: 'New Skills' },
     { href: `/about/team`, label: 'Meet the Team' },
     { href: `/about/diversity`, label: 'Diversity & Inclusion' },
 ];
