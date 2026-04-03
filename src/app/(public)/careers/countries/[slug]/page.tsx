@@ -33,15 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const allCountries = await talentService.getCountries({ isActive: true });
   const canonicalUrl = `${AppConfig.baseUrl}/careers/countries/${country.slug}`;
-
-  const languageAlternates: { [key: string]: string } = {};
-  allCountries.forEach((c) => {
-    languageAlternates[
-      `en-${c.isoCode}`
-    ] = `${AppConfig.baseUrl}/careers/countries/${c.slug}`;
-  });
 
   const title = `Careers in ${country.name}`;
   const description = `Explore job opportunities and learn about Baalvion's presence in ${country.name}. Join our globally distributed team.`;
@@ -51,7 +43,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: {
       canonical: canonicalUrl,
-      languages: languageAlternates,
     },
     openGraph: {
       title: `${title} | TalentOS by Baalvion`,

@@ -28,18 +28,13 @@ export async function getCareersLandingMetadata(canonicalPath: string): Promise<
     "Join Baalvion, headquartered in India with a globally distributed workforce. We're building the intelligent infrastructure that connects exceptional talent with borderless opportunity.";
   const canonicalUrl = `${AppConfig.baseUrl}${canonicalPath}`;
 
-  const allCountries = await talentService.getCountries({ isActive: true });
-  const languageAlternates: Record<string, string> = {};
-  allCountries.forEach((c) => {
-    languageAlternates[`en-${c.isoCode}`] = `${AppConfig.baseUrl}/careers/countries/${c.slug}`;
-  });
-
+  // Keep canonical-only for main careers landing to avoid cross-country hreflang duplication.
+  // Country-specific URLs are not language variants; they represent region filters.
   return {
     title,
     description,
     alternates: {
       canonical: canonicalUrl,
-      languages: languageAlternates,
     },
     openGraph: {
       title,
