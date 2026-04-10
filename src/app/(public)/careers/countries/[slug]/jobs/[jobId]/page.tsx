@@ -9,6 +9,7 @@ import { JobCompensationSection } from '@/modules/talent-acquisition/components/
 import { JobComplianceSection } from '@/modules/talent-acquisition/components/job-detail/JobComplianceSection';
 import { Separator } from '@/components/ui/separator';
 import { TrackViewedJob } from '@/modules/jobs/components/TrackViewedJob';
+import { generateJobPostingStructuredData } from '@/lib/structured-data';
 
 type Props = {
   params: { slug: string; jobId: string };
@@ -16,19 +17,24 @@ type Props = {
 
 export async function generateStaticParams() {
   try {
-    const jobsResponse = await talentService.getJobs({ status: 'published', limit: 1000 });
+    const jobsResponse = await talentService.getJobs({
+      status: 'published',
+      limit: 1000,
+    });
     const jobs = jobsResponse.data;
     const countries = await talentService.getCountries({ isActive: true });
-    
-    return jobs.map((job) => {
-      const country = countries.find(c => c.id === job.countryId);
-      return {
-        slug: country?.slug || '',
-        jobId: job.id,
-      };
-    }).filter(p => p.slug);
+
+    return jobs
+      .map((job) => {
+        const country = countries.find((c) => c.id === job.countryId);
+        return {
+          slug: country?.slug || '',
+          jobId: job.id,
+        };
+      })
+      .filter((p) => p.slug);
   } catch (error) {
-    console.error("Failed to generate static params for jobs:", error);
+    console.error('Failed to generate static params for jobs:', error);
     return [];
   }
 }
@@ -78,85 +84,73 @@ export default async function JobDetailPage({ params }: Props) {
     notFound();
   }
 
-  const department = (await talentService.getDepartments({})).find(d => d.id === job.departmentId);
-  const complianceProfile = await talentService.getComplianceProfile(country.complianceProfileId);
+  const department = (await talentService.getDepartments({})).find(
+    (d) => d.id === job.departmentId,
+  );
+  const complianceProfile = await talentService.getComplianceProfile(
+    country.complianceProfileId,
+  );
   const applyUrl = `/careers/application/${country.slug}?jobId=${job.id}`;
-  
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "JobPosting",
-    "title": job.title,
-    "description": `<p>${job.description}</p> <strong>Responsibilities:</strong><ul>${job.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul> <strong>Qualifications:</strong><ul>${job.qualifications.map(q => `<li>${q}</li>`).join('')}</ul>`,
-    "datePosted": job.createdAt,
-    "validThrough": job.publishEndDate || new Date(new Date(job.createdAt).setMonth(new Date(job.createdAt).getMonth() + 6)).toISOString(),
-    "employmentType": job.employmentType.toUpperCase(),
-    "hiringOrganization": {
-      "@type": "Organization",
-      "name": "Baalvion Industries Pvt Ltd",
-      "sameAs": AppConfig.baseUrl,
-      "logo": `${AppConfig.baseUrl}/logo.png`
-    },
-    "jobLocation": {
-      "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": job.city,
-        "addressRegion": job.state,
-        "addressCountry": country.isoCode
-      }
-    },
-    ...(job.salaryVisibility === 'Public' && job.salaryBand && {
-      "baseSalary": {
-        "@type": "MonetaryAmount",
-        "currency": job.currency,
-        "value": {
-          "@type": "QuantitativeValue",
-          "minValue": job.salaryBand.split('-')[0],
-          "maxValue": job.salaryBand.split('-')[1],
-          "unitText": "YEAR" // Assuming annual for this mock
-        }
-      }
-    })
-  };
+
+  // Generate structured data using our utility
+  const structuredData = generateJobPostingStructuredData(
+    job,
+    AppConfig.baseUrl,
+  );
 
   return (
     <>
       <TrackViewedJob jobId={job.id} />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <main className="bg-background">
-        <JobHeader job={job} country={country} departmentName={department?.name} applyUrl={applyUrl} />
-        
+        <JobHeader
+          job={job}
+          country={country}
+          departmentName={department?.name}
+          applyUrl={applyUrl}
+        />
+
         <div className="container mx-auto py-16 lg:py-24 max-w-6xl">
-            <div className="grid lg:grid-cols-4 gap-12 items-start">
-                <div className="lg:col-span-3 space-y-12">
-                    <JobSection title="Job Overview">
-                        <p className="text-muted-foreground">{job.description}</p>
-                    </JobSection>
-                    <JobSection title="Responsibilities">
-                        <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                            {job.responsibilities.map((item, i) => <li key={i}>{item}</li>)}
-                        </ul>
-                    </JobSection>
-                     <JobSection title="Qualifications">
-                        <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-                            {job.qualifications.map((item, i) => <li key={i}>{item}</li>)}
-                        </ul>
-                    </JobSection>
+          <div className="grid lg:grid-cols-4 gap-12 items-start">
+            <div className="lg:col-span-3 space-y-12">
+              <JobSection title="Job Overview">
+                <p className="text-muted-foreground">{job.description}</p>
+              </JobSection>
+              <JobSection title="Responsibilities">
+                <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                  {job.responsibilities.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </JobSection>
+              <JobSection title="Qualifications">
+                <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                  {job.qualifications.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </JobSection>
 
-                    <Separator />
+              <Separator />
 
-                    <JobCompensationSection job={job} />
+              <JobCompensationSection job={job} />
 
-                    {complianceProfile && <JobComplianceSection compliance={complianceProfile} />}
-
-                </div>
-                <aside className="lg:col-span-1 lg:sticky top-24">
-                   <JobMetaSidebar job={job} departmentName={department?.name} countryName={country.name} applyUrl={applyUrl} />
-                </aside>
+              {complianceProfile && (
+                <JobComplianceSection compliance={complianceProfile} />
+              )}
             </div>
+            <aside className="lg:col-span-1 lg:sticky top-24">
+              <JobMetaSidebar
+                job={job}
+                departmentName={department?.name}
+                countryName={country.name}
+                applyUrl={applyUrl}
+              />
+            </aside>
+          </div>
         </div>
       </main>
     </>

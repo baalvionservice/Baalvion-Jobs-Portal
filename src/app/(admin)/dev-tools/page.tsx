@@ -59,6 +59,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { GoogleIndexingTrigger } from '@/components/admin/GoogleIndexingTrigger';
 import { motion } from 'framer-motion';
 
 // Schemas for the forms
@@ -468,6 +469,7 @@ export default function DevDashboardPage() {
           <RecentlyViewedJobsCard />
         </div>
       </div>
+      <GoogleIndexingTrigger />
       <AnalyticsCard />
     </motion.div>
   );
