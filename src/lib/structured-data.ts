@@ -33,7 +33,7 @@ export function generateJobPostingStructuredData(
     Hybrid: ['https://schema.org/RemoteWork', 'https://schema.org/OnsiteWork'],
   };
 
-  const structuredData = {
+  const structuredData: any = {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
     identifier: {

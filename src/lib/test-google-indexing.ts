@@ -47,7 +47,10 @@ async function testGoogleIndexingSetup() {
       return false;
     }
   } catch (error) {
-    console.log('❌ Service account JSON is invalid:', error.message);
+    console.log(
+      '❌ Service account JSON is invalid:',
+      error instanceof Error ? error.message : String(error),
+    );
     return false;
   }
 
@@ -60,7 +63,7 @@ async function testGoogleIndexingSetup() {
   } catch (error) {
     console.log(
       '❌ Failed to initialize Google Indexing Service:',
-      error.message,
+      error instanceof Error ? error.message : String(error),
     );
     return false;
   }
@@ -89,7 +92,7 @@ async function testGoogleIndexingSetup() {
     } catch (error) {
       console.log(
         '⚠️  Could not test API endpoint (server may not be running):',
-        error.message,
+        error instanceof Error ? error.message : String(error),
       );
       console.log("   This is OK if you're not running the dev server");
     }
