@@ -1,3 +1,7 @@
+<div align="center">
+  <img src=".github/preview.png" alt="TalentOS by Baalvion" width="100%" />
+</div>
+
 # TalentOS by Baalvion
 
 **TalentOS** is an intelligent, global talent acquisition platform designed to connect exceptional talent with borderless opportunity.
