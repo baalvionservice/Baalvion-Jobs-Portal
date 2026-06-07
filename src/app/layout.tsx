@@ -56,9 +56,17 @@ export default function RootLayout({
         />
         <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
       </head>
-      <body className='font-sans antialiased'>
-        <AppProvider>{children}</AppProvider>
-      </body>
+     <body
+  className="font-body antialiased bg-background text-foreground overflow-x-hidden selection:bg-gold selection:text-white"
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  }}
+>
+  <p>Pay to your Employee</p>
+</body>
     </html>
   );
 }
